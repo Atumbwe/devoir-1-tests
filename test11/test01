@@ -1,0 +1,55 @@
+class CPU {
+    private val stack = Stack<Int>()
+    var r = 0
+
+    fun execute(instructions: List<String>) {
+        for (instruction in instructions) {
+            val parts = instruction.split(" ")
+            when (parts[0]) {
+                "nop" -> {}
+                "push" -> stack.push(parts[1].toInt())
+                "pop" -> stack.pop()
+                "load" -> r = stack.pop()
+                "store" -> stack.push(r)
+                "add" -> {
+                    val b = stack.pop()
+                    val a = stack.pop()
+                    stack.push(a + b)
+                }
+                "sub" -> {
+                    val b = stack.pop()
+                    val a = stack.pop()
+                    stack.push(a - b)
+                }
+                "mul" -> {
+                    val b = stack.pop()
+                    val a = stack.pop()
+                    stack.push(a * b)
+                }
+                "div" -> {
+                    val b = stack.pop()
+                    val a = stack.pop()
+                    stack.push(a / b)
+                }
+                "mod" -> {
+                    val b = stack.pop()
+                    val a = stack.pop()
+                    stack.push(a % b)
+                }
+                "jump" -> {}
+                "jumpz" -> {}
+                "jumpnz" -> {}
+                "print" -> println(stack.peek())
+                "stack" -> println(stack)
+                else -> throw IllegalArgumentException("Unknown instruction: ${parts[0]}")
+            }
+        }
+    }
+}
+
+fun main(args: Array<String>) {
+    if (args.size < 1) {
+        println("Usage: $0 <instructions file>")
+        return
+    }
+}
